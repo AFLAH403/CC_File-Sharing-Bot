@@ -1,4 +1,5 @@
-hydrogram
+pyrogram
+pyromod
 tgcrypto
 pymongo[srv]
 python-dotenv
