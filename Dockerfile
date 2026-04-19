@@ -2,17 +2,16 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system dependencies
+# Install minimal system dependencies (uvloop removed)
 RUN apt-get update && apt-get install -y \
-    build-essential \
     git \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy requirements first (for better caching)
 COPY requirements.txt .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -U pip setuptools wheel && \
+# Install Python dependencies (no build tools needed now)
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
     pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
@@ -20,10 +19,6 @@ COPY . .
 
 # Expose port (Railway uses this)
 EXPOSE ${PORT:-8080}
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD python -c "import requests; requests.get('http://localhost:${PORT:-8080}/', timeout=5)" || exit 1
 
 # Run the application
 CMD ["python3", "main.py"]
