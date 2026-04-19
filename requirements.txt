@@ -1,5 +1,5 @@
 pyrogram==2.0.106
-pyromod==0.0.51
+pyromod==3.1.6          ← ✅ Updated (was 0.0.51 - doesn't exist)
 tgcrypto==1.2.5
 pymongo[srv]==4.6.0
 python-dotenv==1.0.0
